@@ -1,0 +1,97 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<script type="text/javascript" src="../moment/min/moment.min.js"></script>
+
+<dom-module id="pmp-simple-date-input">
+      <template>
+            <style>
+                   :host {
+                        display: block;
+                  }
+            </style>
+            <paper-input-container id="container" always-float-label="true" invalid="[[invalid]]">
+                  <label>[[label]]</label>
+                  <input is="iron-input" id="input" label="{{label}}" bind-value="{{value}}" required="{{required}}" auto-validate="{{autoValidate}}" invalid="{{invalid}}" maxlength="10" allowed-pattern="[0-9\/]" placeholder="MM/DD/YYYY">
+                  <template is="dom-if" if="[[errorMessage]]">
+                        <paper-input-error id="error">[[errorMessage]]</paper-input-error>
+                  </template>
+            </paper-input-container>
+      </template>
+
+      <script>
+            'use strict';
+            Polymer({
+                  is: 'pmp-simple-date-input',
+                  behaviors: [
+                        Polymer.PaperInputBehavior
+                  ],
+                  properties: {
+                        label: {
+                              type: String,
+                              value: 'Date of Birth'
+                        },
+                        value: {
+                              type: String,
+                              notify: true,
+                              observer: '_onValueChanged'
+                        },
+                        invalid: {
+                              type: Boolean,
+                              value: false,
+                              notify: true
+                        },
+                        autoValidate: {
+                              type: Boolean,
+                              value: false,
+                              notify: true
+                        },
+                        required: {
+                              type: Boolean,
+                              value: false,
+                              notify: true
+                        },
+                        _pattern: {
+                              type: String,
+                              value: 'MM/DD/YYYY'
+                        },
+                  },
+                  _onValueChanged: function(value, oldValue) {
+                        if (oldValue == undefined || value === oldValue)
+                              return;
+                        value = value ? value.toString() : '';
+                        let start = this.$.input.selectionStart;
+                        let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
+                        value = value.replace(/\//g, '');
+                        let shouldFormat = value.length <= this._pattern.replace(/\//g, '').length;
+                        let formattedValue = '';
+                        let currentSlashIndex = 0;
+                        let totalSlashesAdded = 0;
+                        for (let i = 0; i < value.length; i++) {
+                              currentSlashIndex = this._pattern.indexOf('/', currentSlashIndex);
+                              if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) {
+                                    formattedValue += '/';
+                                    currentSlashIndex++;
+                                    totalSlashesAdded++;
+                              }
+                              formattedValue += value[i];
+                        }
+                        let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
+                        let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
+                        this.updateValueAndPreserveCaret(formattedValue.trim());
+                        this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
+                        if (this.autoValidate) {
+                              this.validate();
+                        }
+                  },
+                  validate: function() {
+                        if (this.value.length == 10) {
+                              this.invalid = !(moment(this.value, this._pattern, true).isValid()) ||
+                                    (moment().subtract(18, "years") < moment(new Date(this.value)));
+                              this.set('invalid', this.invalid);
+                        }
+                  },
+            });
+      </script>
+</dom-module>
