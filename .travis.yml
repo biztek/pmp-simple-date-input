@@ -21,7 +21,7 @@ env:
   global:
     - SAUCE_USERNAME=rajvenkee
     - SAUCE_ACCESS_KEY=64abfd16-be86-4221-bb04-9667755e7ee5
-
+sauce_connect: true
 script:
 - xvfb-run wct --skip-plugin sauce
-- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin local; fi
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --skip-plugin local; fi
