@@ -12,7 +12,7 @@ addons:
 
 before_script:
 - npm install -g bower polylint web-component-tester
-- bower install paper-input
+- bower install moment#2.3.0
 - bower install
 - export PATH=$PWD/node_modules/.bin:$PATH
 - polylint
