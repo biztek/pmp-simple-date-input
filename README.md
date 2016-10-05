@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/biztek/pmp-simple-date-input.svg?branch=master)](https://travis-ci.org/biztek/pmp-simple-date-input)
 
-_[Demo and API docs](https://rajkumarajce.github.io/pmp-simple-date-input/components/pmp-simple-date-input)_
+_[Demo and API docs](https://biztek.github.io/pmp-simple-date-input/components/pmp-simple-date-input)_
 
 # \<pmp-simple-date-input\>
 
