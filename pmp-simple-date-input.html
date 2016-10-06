@@ -2,9 +2,14 @@
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../iron-input/iron-input.html">
-<script type="text/javascript" src="../moment/min/moment.min.js"></script>
 <link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="pmp-moment.html">
+<!--
+`pmp-simple-date-input`
 
+
+@demo demo/index.html
+-->
 <dom-module id="pmp-simple-date-input">
       <template>
             <style>
@@ -14,7 +19,8 @@
             </style>
             <paper-input-container id="container" always-float-label="true" invalid="[[invalid]]">
                   <label>[[label]]</label>
-                  <input is="iron-input" id="input" label="{{label}}" bind-value="{{value}}" required="{{required}}" auto-validate="{{autoValidate}}" invalid="{{invalid}}" maxlength="10" allowed-pattern="[0-9\/]" placeholder="MM/DD/YYYY">
+                  <input is="iron-input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" id="input" label="{{label}}" bind-value="{{value}}" required$="[[required]]" auto-validate="{{autoValidate}}" invalid="{{invalid}}" maxlength="10" allowed-pattern="[0-9\/]"
+                      placeholder="MM/DD/YYYY" pattern="{{pattern}}">
                   <template is="dom-if" if="[[errorMessage]]">
                         <paper-input-error id="error">[[errorMessage]]</paper-input-error>
                   </template>
@@ -53,9 +59,10 @@
                               value: false,
                               notify: true
                         },
-                        _pattern: {
+                        pattern: {
                               type: String,
-                              value: 'MM/DD/YYYY'
+                              value: 'MM/DD/YYYY',
+                              observer: '_patternChanged'
                         },
                   },
                   _onValueChanged: function(value, oldValue) {
@@ -65,12 +72,12 @@
                         let start = this.$.input.selectionStart;
                         let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
                         value = value.replace(/\//g, '');
-                        let shouldFormat = value.length <= this._pattern.replace(/\//g, '').length;
+                        let shouldFormat = value.length <= this.pattern.replace(/\//g, '').length;
                         let formattedValue = '';
                         let currentSlashIndex = 0;
                         let totalSlashesAdded = 0;
                         for (let i = 0; i < value.length; i++) {
-                              currentSlashIndex = this._pattern.indexOf('/', currentSlashIndex);
+                              currentSlashIndex = this.pattern.indexOf('/', currentSlashIndex);
                               if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) {
                                     formattedValue += '/';
                                     currentSlashIndex++;
@@ -88,10 +95,17 @@
                   },
                   validate: function() {
                         if (this.value.length == 10) {
-                              this.invalid = !(moment(this.value, this._pattern, true).isValid()) ||
-                                    (moment().subtract(18, "years") < moment(new Date(this.value)));
+                              this.invalid = !(moment(this.value, this._pattern, true).isValid());
                               this.set('invalid', this.invalid);
                         }
+                  },
+                  _patternChanged: function() {
+                        // Transform the pattern into a regex the iron-input understands.
+                        var regex = '';
+                        regex = this.pattern.replace(/\s/g, '\\s');
+                        regex = regex.replace(/X/gi, '\\d');
+                        regex = regex.replace(/\+/g, '\\+');
+                        this.$.input.pattern = regex;
                   },
             });
       </script>

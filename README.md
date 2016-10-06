@@ -4,7 +4,7 @@ _[Demo and API docs](https://biztek.github.io/pmp-simple-date-input/components/p
 
 # \<pmp-simple-date-input\>
 
-`<pmp-simple-date-input>` is a single-line text field to hold valid Date of Birth of pattern MM/DD/YYYY.
+`<pmp-simple-date-input>` is a single-line text field to hold valid Date input of given date pattern.
 
 ```html
 <pmp-simple-date-input label="Input label"></pmp-simple-date-input>
@@ -26,6 +26,6 @@ tasks such as auto-validating and label styling when the `bind-value` changes.
 
 ### Validation
 
-If the `auto-validate` attribute is set, element validates the input whether it is valid date of pattern MM/DD/YYYY  and DOB falls within 18years from now and update
+If the `auto-validate` attribute is set, element validates the input whether it is valid date of given pattern  and update
 the label styling when the input value changes.
 

@@ -2,7 +2,10 @@
   "name": "pmp-simple-date-input",
   "main": "pmp-simple-date-input.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "moment": "2.3.0",
+    "paper-input": "^1.1.20",
+    "iron-input": "^1.0.10"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
