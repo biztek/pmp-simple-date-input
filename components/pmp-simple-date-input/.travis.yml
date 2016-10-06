@@ -1,0 +1,25 @@
+language: node_js
+node_js: stable
+dist: trusty
+sudo: required
+addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+
+before_script:
+- npm install -g bower polylint web-component-tester
+- bower install
+- export PATH=$PWD/node_modules/.bin:$PATH
+- polylint
+env:
+  global:
+    - SAUCE_USERNAME=rajvenkee
+    - SAUCE_ACCESS_KEY=64abfd16-be86-4221-bb04-9667755e7ee5
+
+script:
+- xvfb-run wct --skip-plugin sauce
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin local; fi

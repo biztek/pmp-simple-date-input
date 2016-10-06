@@ -1,0 +1,30 @@
+{
+  "name": "moment",
+  "version": "2.3.0",
+  "main": "moment.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tasks",
+    "component.json",
+    "composer.json",
+    "CONTRIBUTING.md",
+    "ender.js",
+    "Gruntfile.js",
+    "package.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/moment/moment",
+  "_release": "2.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.3.0",
+    "commit": "e8a659bb51669c4908d63f17205e2d35601bdf84"
+  },
+  "_source": "https://github.com/moment/moment.git",
+  "_target": "2.3.0",
+  "_originalSource": "moment"
+}

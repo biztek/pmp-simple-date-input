@@ -1,0 +1,27 @@
+{
+  "name": "pmp-simple-date-input",
+  "main": "pmp-simple-date-input.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "moment": "2.3.0",
+    "paper-input": "^1.1.20",
+    "iron-input": "^1.0.10"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/biztek/pmp-simple-date-input",
+  "_release": "5405ec0459",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5405ec045904b496b7ca5ea4e4b36cabfbf68a3f"
+  },
+  "_source": "git://github.com/biztek/pmp-simple-date-input.git",
+  "_target": "master",
+  "_originalSource": "biztek/pmp-simple-date-input",
+  "_direct": true
+}

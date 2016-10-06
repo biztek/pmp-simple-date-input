@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html>
+
+<head>
+      <title>pmp-simple-date-input test</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+      <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+      <script src="../../web-component-tester/browser.js"></script>
+
+      <link rel="import" href="../pmp-simple-date-input.html">
+</head>
+
+<body>
+
+      <test-fixture id="basic">
+            <template>
+                  <pmp-simple-date-input></pmp-simple-date-input>
+            </template>
+      </test-fixture>
+
+      <script>
+            suite('pmp-simple-date-input', function() {
+                  let element, dobinput;
+                  setup(function() {
+                        element = fixture('basic');
+                  });
+                  test('instantiating the date element works', function() {
+                        assert.equal(element.is, 'pmp-simple-date-input');
+                  });
+                  test('setting some date value for date and checking the value sets properly', function() {
+                        element.value = '10/11/1984';
+                        assert.equal(element.value, '10/11/1984');
+                  });
+                  test('setting invalid date value for date and check the validity', function() {
+                        element.value = '45/45/4545';
+                        element.validate();
+                        assert.isTrue(element.invalid, 'Date of Birth is invalid');
+                  });
+                  test('setting valid date value for date and check the validity', function() {
+                        element.value = '10/11/1983';
+                        element.validate();
+                        assert.isFalse(element.invalid, 'Date of Birth is invalid');
+                  });
+            });
+      </script>
+</body>
+
+</html>
