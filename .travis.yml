@@ -12,8 +12,9 @@ addons:
 
 before_script:
 - npm install -g bower polylint web-component-tester
-- bower install
+- npm install bower
 - export PATH=$PWD/node_modules/.bin:$PATH
+- bower install
 - polylint
 env:
   global:
