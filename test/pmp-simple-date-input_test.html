@@ -34,7 +34,7 @@
                         assert.equal(element.value, '10/11/1984');
                   });
                   test('setting invalid date value for date and check the validity', function() {
-                        element.value = '45/45/4545';
+                        element.value = '19.31.1782';
                         element.validate();
                         assert.isTrue(element.invalid, 'Date of Birth is invalid');
                   });
