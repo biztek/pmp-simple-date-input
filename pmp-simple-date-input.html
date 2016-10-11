@@ -64,6 +64,10 @@
                               value: 'MM/DD/YYYY',
                               observer: '_patternChanged'
                         },
+                        disabled: {
+                              type: Boolean,
+                              value: true
+                        }
                   },
                   _onValueChanged: function(value, oldValue) {
                         if (oldValue == undefined || value === oldValue)
