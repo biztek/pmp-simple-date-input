@@ -17,9 +17,9 @@
                         display: block;
                   }
             </style>
-            <paper-input-container id="container" always-float-label="true" invalid="[[invalid]]">
+            <paper-input-container id="container" disabled$="[[disabled]]" always-float-label="true" invalid="[[invalid]]">
                   <label>[[label]]</label>
-                  <input is="iron-input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" id="input" disabled$="[[disabled]]" bind-value="{{value}}" required$="[[required]]" auto-validate="{{autoValidate}}" invalid="{{invalid}}" maxlength="10"
+                  <input is="iron-input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" id="input" disabled$="[[disabled]]" bind-value="{{value}}" required$="[[required]]" auto-validate="[[autoValidate]]" invalid="{{invalid}}" maxlength="10"
                       allowed-pattern="[0-9\/]" placeholder="MM/DD/YYYY" pattern="{{pattern}}">
                   <template is="dom-if" if="[[errorMessage]]">
                         <paper-input-error id="error">[[errorMessage]]</paper-input-error>
