@@ -5,8 +5,7 @@
         "polymer": "Polymer/polymer#^1.4.0",
         "moment": "^2.15.1",
         "paper-input": "PolymerElements/paper-input#^1.1.20",
-        "iron-input": "PolymerElements/iron-input#^1.0.10",
-        "test-fixture": "PolymerElements/test-fixture#^1.1.1"
+        "iron-input": "PolymerElements/iron-input#^1.0.10"
     },
     "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
