@@ -3,6 +3,8 @@
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+
 <link rel="import" href="pmp-moment.html">
 <!--
 `pmp-simple-date-input`
@@ -11,105 +13,163 @@
 @demo demo/index.html
 -->
 <dom-module id="pmp-simple-date-input">
-      <template>
-            <style>
-                   :host {
-                        display: block;
-                  }
-            </style>
-            <paper-input-container id="container" disabled$="[[disabled]]" always-float-label="true" invalid="[[invalid]]">
-                  <label>[[label]]</label>
-                  <input is="iron-input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" id="input" disabled$="[[disabled]]" bind-value="{{value}}" required$="[[required]]" auto-validate="[[autoValidate]]" invalid="{{invalid}}" maxlength="10"
-                      allowed-pattern="[0-9\/]" placeholder="MM/DD/YYYY" pattern="{{pattern}}">
-                  <template is="dom-if" if="[[errorMessage]]">
-                        <paper-input-error id="error">[[errorMessage]]</paper-input-error>
-                  </template>
-            </paper-input-container>
-      </template>
+    <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
 
-      <script>
-            'use strict';
-            Polymer({
-                  is: 'pmp-simple-date-input',
-                  behaviors: [
-                        Polymer.PaperInputBehavior
-                  ],
-                  properties: {
-                        label: {
-                              type: String,
-                              value: 'Date of Birth'
-                        },
-                        value: {
-                              type: String,
-                              notify: true,
-                              observer: '_onValueChanged'
-                        },
-                        invalid: {
-                              type: Boolean,
-                              value: false,
-                              notify: true
-                        },
-                        autoValidate: {
-                              type: Boolean,
-                              value: false,
-                              notify: true
-                        },
-                        required: {
-                              type: Boolean,
-                              value: false,
-                              notify: true
-                        },
-                        pattern: {
-                              type: String,
-                              value: 'MM/DD/YYYY',
-                              observer: '_patternChanged'
-                        },
-                        disabled: {
-                              type: Boolean,
-                              value: false
-                        }
-                  },
-                  _onValueChanged: function(value, oldValue) {
-                        if (oldValue == undefined || value === oldValue)
-                              return;
-                        value = value ? value.toString() : '';
-                        let start = this.$.input.selectionStart;
-                        let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
-                        value = value.replace(/\//g, '');
-                        let shouldFormat = value.length <= this.pattern.replace(/\//g, '').length;
-                        let formattedValue = '';
-                        let currentSlashIndex = 0;
-                        let totalSlashesAdded = 0;
-                        for (let i = 0; i < value.length; i++) {
-                              currentSlashIndex = this.pattern.indexOf('/', currentSlashIndex);
-                              if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) {
-                                    formattedValue += '/';
-                                    currentSlashIndex++;
-                                    totalSlashesAdded++;
-                              }
-                              formattedValue += value[i];
-                        }
-                        let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
-                        let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
-                        this.updateValueAndPreserveCaret(formattedValue.trim());
-                        this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
-                        if (this.autoValidate) {
-                              this.validate();
-                        }
-                  },
-                  validate: function() {
-                        if (this.value.length == 10) {
-                              this.invalid = !(moment(this.value, this._pattern, true).isValid());
-                              this.set('invalid', this.invalid);
-                        }
-                  },
-                  _patternChanged: function() {
-                        var regex = '';
-                        regex = this.pattern.replace(/\s/g, '\\s');
-                        regex = regex.replace(/X/gi, '\\d');
-                        regex = regex.replace(/\+/g, '\\+');
-                        this.$.input.pattern = regex;
-                  },
-            });
-      </script>
+    <paper-input-container id="container"
+      disabled$="[[disabled]]"
+      always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]"
+      invalid="[[invalid]]">
+
+    <label hidden$="[[!label]]">[[label]]</label>
+
+    <input is="iron-input" id="input"
+      aria-labelledby$="[[_ariaLabelledBy]]"
+      aria-describedby$="[[_ariaDescribedBy]]"
+      disabled$="[[disabled]]"
+      bind-value="{{value}}"
+      required$="[[required]]"
+      name$="[[name]]"
+      prevent-invalid-input
+      invalid="{{invalid}}"
+      autofocus$="[[autofocus]]"
+      inputmode$="[[inputmode]]"
+      maxlength$="[[maxlength]]"
+      allowed-pattern="[0-9\/]"
+      placeholder$="[[placeholder]]">
+
+    <template is="dom-if" if="[[errorMessage]]">
+      <paper-input-error id="error">[[errorMessage]]</paper-input-error>
+    </template>
+
+    </paper-input-container>
+    </template>
+
+    <script>
+        'use strict';
+        Polymer({ // jshint ignore:line
+            is: 'pmp-simple-date-input',
+            behaviors: [
+                Polymer.PaperInputBehavior, // jshint ignore:line
+                Polymer.IronFormElementBehavior // jshint ignore:line
+            ],
+            properties: {
+                label: {
+                    type: String,
+                    value: 'Date of Birth'
+                },
+                value: {
+                    type: String,
+                    notify: true,
+                    observer: '_onValueChanged'
+                },
+                invalid: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+                autoValidate: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+                required: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+                disabled: {
+                    type: Boolean,
+                    value: false
+                },
+                datePattern: {
+                    type: String,
+                    value: 'MM/DD/YYYY',
+                    observer: '_patternChanged'
+                },
+                placeholder: {
+                    type: String,
+                    value: 'MM/DD/YYYY'
+                },
+                maxlength: {
+                    type: Number,
+                    value: 10
+                }
+            },
+
+            observers: [
+                '_onFocusedChanged(focused)'
+            ],
+
+            ready: function() {
+                if (this.value)
+                    this._handleAutoValidate();
+            },
+
+            _onValueChanged: function(value, oldValue) {
+                if (typeof oldValue === 'undefined' || value === oldValue)
+                    return;
+                value = value ? value.toString() : '';
+                let start = this.$.input.selectionStart;
+                let initialSlashesBeforeCaret = value.substr(0, start).split('/').length - 1;
+                value = value.replace(/\//g, '');
+                let shouldFormat = value.length <= this.datePattern.replace(/\//g, '').length;
+                let formattedValue = '';
+                let currentSlashIndex = 0;
+                let totalSlashesAdded = 0;
+                for (let i = 0; i < value.length; i++) {
+                    currentSlashIndex = this.datePattern.indexOf('/', currentSlashIndex);
+                    if (shouldFormat && i == (currentSlashIndex - totalSlashesAdded)) { // jshint ignore:line
+                        formattedValue += '/';
+                        currentSlashIndex++;
+                        totalSlashesAdded++;
+                    }
+                    formattedValue += value[i];
+                }
+                let updatedSlashesBeforeCaret = formattedValue.substr(0, start).split('/').length - 1;
+                let slashesDifference = updatedSlashesBeforeCaret - initialSlashesBeforeCaret;
+                this.updateValueAndPreserveCaret(formattedValue.trim());
+                this.$.input.selectionStart = this.$.input.selectionEnd = start + slashesDifference;
+                this._handleAutoValidate();
+            },
+
+            _onFocusedChanged: function(focused) {
+                if (!focused) {
+                    this._handleAutoValidate();
+                }
+            },
+
+            validate: function() {
+                var valid = this.$.input.validate();
+                if (this.value && this.value.length === 10) {
+                    this.invalid = !(moment(this.value, this.datePattern, true).isValid()); // jshint ignore:line
+                    this.$.container.invalid = this.invalid;
+                    this.set('invalid', this.invalid);
+                } else {
+                    this.$.container.invalid = !valid;
+                }
+
+                this.$.container.updateAddons({
+                    inputElement: this.$.input,
+                    value: this.value,
+                    invalid: !valid
+                });
+                return valid;
+            },
+
+            _patternChanged: function() {
+                var regex = '';
+                regex = this.datePattern.replace(/\s/g, '\\s');
+                regex = regex.replace(/M/gi, '\d');
+                regex = regex.replace(/D/gi, '\\d');
+                regex = regex.replace(/Y/gi, '\\d');
+                regex = regex.replace(/\+/g, '\\+');
+                this.$.input.pattern = regex;
+            },
+        });
+    </script>
 </dom-module>
