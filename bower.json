@@ -3,7 +3,7 @@
   "main": "pmp-simple-date-input.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.7.0",
-    "moment": "^2.15.1",
+    "moment": "^2.15.2",
     "paper-input": "PolymerElements/paper-input#^1.1.20",
     "iron-input": "PolymerElements/iron-input#^1.0.10",
     "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#^1.0.6"
