@@ -29,3 +29,6 @@ tasks such as auto-validating and label styling when the `bind-value` changes.
 If the `auto-validate` attribute is set, element validates the input whether it is valid date of given pattern  and update
 the label styling when the input value changes.
 
+### License
+
+Licensed under [Apache 2.0](LICENSE).
