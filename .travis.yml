@@ -3,6 +3,7 @@ node_js: stable
 dist: trusty
 sudo: required
 addons:
+  sauce_connect: true
   firefox: latest
   apt:
     sources:
@@ -13,10 +14,6 @@ before_script:
 - npm install -g bower polylint web-component-tester
 - bower install
 - polylint
-env:
-  global:
-  - secure: QuPtonreG1k9O3B13Zdz9F09MI6bq//N2jZOdoR9TFaND4nmKmaZIf776pA6/bD+UbnxP4OX0kTWkEX8mOxWIgWVyeQdsdc1BSGcA33YZ74uaa1iHQmAptEgbCkxhqVf+vmfyJNxa8K7IaKO+Ajn92izvvuIHaxex4cJceHeJO6Ma27C01WboRUWs9hzD/3PguTsuKuVgc+Px4IksfFC+MQlF0fRNnRl3zUKLHEbAATIY0ZGiHywOLw4ivnYtnY9DVdtWuaOaduK1QGlg87IQdAKiq49YAqOFA/Dvoq2u6nWHKw6FrSW70l0+wq7vHLfomZqR6wTz8+CIQ4oc+6UmsPcRcexfv5k9PpFG/aXxDu71NWr1tJUFaQPBtIVaT+TMlLn3LEPjLNu0Xp/hlCFx+8GsUCQ3Ay2PLwcf36BataRuFXvg/ToBKQeJenq30LYM77jIYUtA97BonqGRLlA8CWz/qsueqtlKAWP3qCublq8s/4VBPdIowPDvQcIlM8NPN7mpWeLu2AQ0sQ8MR6PT/31LYw64vaA8ubYF2hisurSvlIpn95yUoh2xk1eBZNk5fDdgQ1KGpUKUdLLRMLDPylBMexZvEH0WFw43Kme0c5M96uk+WZ9GdaGU1htZJolVTSnDzUBGoB6UPtPbGLFLSKTLjeRtSHmCqj6ZmUPAos=
-  - secure: dOvgmIJlwGoSj3HSp558tEkw+bQUgff+wOUMBfnRTFgsGRNDHZLghFC7QqIQHfBP1wkKMdDWdtd6jsR2Y/W1rtDmqBS5v46RegKjX5MwOv48xj8asAliEshQiBDSXKvqhOhYlK5M7Yfqbwro+XsytLlyyTas2luGJJj/uHhWkC965LsdnOBkGBO7UaceOgRiAZIA74BUB4dWoput+W7Cj+LQu1iKGA1HtdhAsquU+I/v7qG5bRJouhszUToV6wOF+DVxbkBXktt90DMc4U5YqhXEoexBH0vcUZtRUIQJE96AKafanLKZCGZJWBIhT0QFS4RI6bbEDEdmsmgzfmZwyam/CUXn+rxvt2blvXurCIG3hBir0MhkASlmuwgLRj9LFj5nr/13ik1DSOnO7laSY6OhWXleNT3yn6RdejuLCiX1EcuFGOboFLFlxB809EPUt8ldvkJMikg61rY4llN28+mZm7tmK3+gNnHJYwDXcVUkOOOxo9BD+cLJRKnMDIt5tSBHlD8/F6HT0NHlX9Hgnries0mpgnbqj/HlBZx/0IDZfBGHePKE7Jp3gF0cmANKGIR59tVys5DniYVHTB++U7abaGx0y3Nfj253D6Floysf6c40M3+LGFDmztNwPe6FwGuVjVsiViUMZowZP1Yvm429Xvpfw9qkySDDgp/OR14=
 script:
 - xvfb-run wct --skip-plugin sauce
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
