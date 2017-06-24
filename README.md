@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/biztek/pmp-simple-date-input.svg?branch=master)](https://travis-ci.org/biztek/pmp-simple-date-input)
 
+[![Sauce Test Status](https://saucelabs.com/buildstatus/biztek_opensource_sauce)](https://saucelabs.com/u/biztek_opensource_sauce)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/biztek_opensource_sauce.svg)](https://saucelabs.com/u/biztek_opensource_sauce)
+
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/biztek/pmp-simple-date-input)
 
 _[Demo and API docs](https://biztek.github.io/pmp-simple-date-input/components/pmp-simple-date-input)_
